@@ -1,0 +1,12 @@
+numpy
+joblib
+Flask
+flask-marshmallow
+marshmallow
+Flask-SQLAlchemy
+marshmallow-sqlalchemy
+requests
+scikit-learn
+Flask-Cors
+Keras
+tensorflow

@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+
+  server:
+
+    build: WAID-server/
+
+    ports:
+      - 5000:5000
+
+  client:
+    build: WAID-client/
+
+    depends_on:
+      - server
+      
+    ports:
+      - 3000:3000

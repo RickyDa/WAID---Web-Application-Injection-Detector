@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+</head>
+
+<body>
+<input type="text" id="url" placeholder="URL">
+<button type="button" onclick="sendToProxy()">search!</button>
+<p id="response"></p>
+</body>
+
+</html>
+
+<script>
+    function sendToProxy() {
+        var url_user = document.getElementById("url").value;
+        let url = "http://localhost:5000/proxy/";
+        let data = {"method": "GET", "URL": url_user, "headers": {}, "body": {}};
+        fetch(url, {
+            method: "POST", // or 'PUT'
+            headers: {
+                "Content-Type": "text/html"
+            },
+            body: JSON.stringify(data),
+            mode: "cors"
+        })
+            .then(function (res) {
+                return res.text();
+            }).then(function (html) {
+            console.log(`html = ${html}`);
+            body = document.getElementsByTagName('body')[0].innerHTML = html;
+        });
+    }
+
+</script>

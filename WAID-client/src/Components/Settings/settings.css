@@ -1,0 +1,25 @@
+.active {
+    margin-top: 10em;
+}
+
+tbody {
+    width: auto
+}
+
+td:first-child {
+    vertical-align: middle !important;
+    font-size: 125%;
+}
+
+table{
+    width:60% !important;
+    text-align: left!important;
+}
+
+table th{
+    text-align: center !important;
+}
+
+#fontawesome{
+    text-align: center!important;
+}
