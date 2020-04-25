@@ -1,11 +1,11 @@
-version: "3"
+version: "3.8"
 
 services:
 
   server:
 
     build: WAID-server/
-
+       
     ports:
       - 5000:5000
 
@@ -17,3 +17,4 @@ services:
       
     ports:
       - 3000:3000
+

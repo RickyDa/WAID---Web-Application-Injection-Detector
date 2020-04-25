@@ -1,5 +1,5 @@
 import joblib as jlb
-
+from waf import log
 from tensorflow.keras.models import load_model
 from pathlib import Path
 from tensorflow.keras.preprocessing import sequence
@@ -55,9 +55,11 @@ class Classifier:
             # print(results)
             # counts = np.bincount(results)
             # print(counts, np.argmax(counts))
-
+    
             if np.argmax(np.bincount(results)) == 1:
+                log.info("{Classifier predict True")
                 return True
+        log.info("{Classifier predict False")
         return False
 
     def predict_rnn(self, val):
