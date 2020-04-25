@@ -22,12 +22,12 @@ class Flows:
         self.request = request
         self.path = path
 
-        if not config.get_value('is_active', False):
+        if not config.get_value('is_active', False) != 'False':
             return self._response()
 
         payload = parse_payload(self.request)
 
-        if config.get_value('is_client', True):
+        if config.get_value('is_client', True) == 'True':
             return self._client_flow(payload)
         else:
             return self._server_flow(payload)
@@ -52,7 +52,6 @@ class Flows:
                  f"and Analyzer is {'ON' if is_classifier else 'OFF'}")
         if is_analyzer:
             self._use_analyzer(payload)
-
         if is_classifier and payload.anomaly_status != AnomalyStatus.ATTACK.value:
             self._use_classifier(payload)
 
@@ -61,7 +60,7 @@ class Flows:
         if payload.anomaly_status == AnomalyStatus.ATTACK.value:
             return Response(status=403)
         else:
-            self._response()
+            return self._response()
 
     @staticmethod
     def _use_analyzer(payload):

@@ -1,3 +1,9 @@
+import os
+import warnings
+
+warnings.filterwarnings('ignore')
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+
 import joblib as jlb
 from waf import log
 from tensorflow.keras.models import load_model
@@ -55,11 +61,11 @@ class Classifier:
             # print(results)
             # counts = np.bincount(results)
             # print(counts, np.argmax(counts))
-    
+
             if np.argmax(np.bincount(results)) == 1:
-                log.info("{Classifier predict True")
+                log.info(f"Classifier predict True {val} - {results}")
                 return True
-        log.info("{Classifier predict False")
+            log.info(f"Classifier predict False for {val} - {results}")
         return False
 
     def predict_rnn(self, val):
