@@ -6,7 +6,7 @@ if __name__ == '__main__':
 ''''
 LAYERS:
 
-controller - pass http to the dest, pass http to service(Buisness logic)
+controller - pass http to the destination, pass http to service(Business logic)
 Business logic - maps the http request to an object of the db
 dal - commit Request entity to the db
 db - save the entity
