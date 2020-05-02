@@ -18,14 +18,8 @@ class App extends Component {
 
     }
 
-    handleLogin = (data) => {
-        console.log("LOGIN!")
-        this.setState({isLogin: true, user: data});
-    };
     handleLogOut = () => {
-        console.log("LOGOUT!")
-        console.log(this.state);
-        this.setState({isLogin: false, user: ""});
+       sessionStorage.clear()
     };
 
     render() {
@@ -41,16 +35,16 @@ class App extends Component {
                                 <Demo />
                             </Route>
                             <Route path="/rules">
-                                <Rules state={this.state}/>
+                                <Rules/>
                             </Route>
                             <Route path="/users">
-                                <Users state={this.state}/>
+                                <Users/>
                             </Route>
                             <Route path="/control-panel">
-                                <Settings state={this.state}/>
+                                <Settings/>
                             </Route>
                             <Route path="/">
-                                <Login handleLogin={this.handleLogin}/>
+                                <Login />
                             </Route>
                         </Switch>
                     </div>

@@ -18,8 +18,7 @@ export default class AddUser extends Component {
             wrongEmailFormatMessage: false,
             wrongPasswordFormatMessage: false,
             missingFields: false,
-            userAdded:false,
-            duplicateEmail:false
+            duplicateEmail: false
         }
     }
 
@@ -34,8 +33,8 @@ export default class AddUser extends Component {
             wrongEmailFormatMessage: false,
             wrongPasswordFormatMessage: false,
             missingFields: false,
-            userAdded:false,
-            duplicateEmail:false
+            userAdded: false,
+            duplicateEmail: false
         });
 
         let isValid = true;
@@ -58,12 +57,18 @@ export default class AddUser extends Component {
                     role: intRole
                 };
                 try {
-                    await userAxios.post('adduser', data);
-                    this.setState({userAdded:true});
+                    await userAxios.post('adduser', data,
+                        {
+                            headers: {
+                                'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('user'))['access_token']}`,
+                                'Content-Type': 'application/json'
+                            }
+                        });
+                    this.setState({userAdded: true});
                     this.props.handleAdd(data);
                 } catch (error) {
-                    if(error.response.status ===409)
-                        this.setState({duplicateEmail:true});
+                    if (error.response.status === 409)
+                        this.setState({duplicateEmail: true});
                     console.log('error on add user', error);
                 }
             }
@@ -90,7 +95,7 @@ export default class AddUser extends Component {
             wrongEmailFormatMessage: false,
             wrongPasswordFormatMessage: false,
             missingFields: false,
-            duplicateEmail:false
+            duplicateEmail: false
         });
     };
 
@@ -106,7 +111,6 @@ export default class AddUser extends Component {
         const showHideEmailError = this.state.wrongEmailFormatMessage ? "text-danger display-block" : "display-none";
         const showHidePasswordError = this.state.wrongPasswordFormatMessage ? "text-danger display-block" : "display-none";
         const showHideFieldsMissing = this.state.missingFields ? "text-danger display-block" : "display-none";
-        const userAdded = this.state.userAdded ? "text-success display-block bold" : "display-none";
         const duplicateEmail = this.state.duplicateEmail ? "text-danger display-block" : "display-none";
         return (
             <div className='container'>
@@ -143,15 +147,14 @@ export default class AddUser extends Component {
                         options={[
                             {key: "Empty", value: ""},
                             {key: "admin", value: "Admin"},
-                            {key: "readonly",value: "Read Only"}
-                            ]}
+                            {key: "readonly", value: "Read Only"}
+                        ]}
                         name="role"
                         defaultValue={this.state.role ? this.state.role : "empty"}
                         className="form-control rounded"
                         onChange={this.handleChange}/>
                     <p className={showHideFieldsMissing}>Please fill All Fields!</p>
                     <p className={duplicateEmail}>A User With this Email is already in the system!</p>
-                    <p className={userAdded}>User Added Successfully!</p>
                     <Button
                         type={"button"}
                         onClick={this.handleAdd}

@@ -23,3 +23,7 @@ table th{
 #fontawesome{
     text-align: center!important;
 }
+
+small{
+    padding-left: 2px;
+}

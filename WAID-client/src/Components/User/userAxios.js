@@ -1,6 +1,10 @@
 import axios from 'axios';
 
 export default axios.create({
-    baseURL: 'https://localhost:5000/user'
-});
+    baseURL: 'https://localhost:5000/user',
+    headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
+        'Access-Control-Allow-Headers': 'Authorization'}
+    });
 

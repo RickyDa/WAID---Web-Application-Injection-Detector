@@ -10,3 +10,4 @@ scikit-learn
 Flask-Cors
 Keras
 tensorflow
+flask_jwt_extended

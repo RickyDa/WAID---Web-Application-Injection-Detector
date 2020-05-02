@@ -19,11 +19,11 @@ class Config:
     @staticmethod
     def create_config():
         CONFIG_PARSER['GENERAL'] = {
-            'site_address': 'https://redtiger.labs.overthewire.org/',
+            'site_address': '',
             'SECRET_KEY': secrets.token_hex(16),
             'SQLALCHEMY_DATABASE_URI': 'sqlite:///database/server.db',
             'is_client': False,
-            'server_url': '',
+            'server_ip': '',
             'is_active': True,
             'is_analyzer': True,
             'is_classifier': True

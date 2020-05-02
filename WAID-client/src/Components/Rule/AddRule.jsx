@@ -14,7 +14,6 @@ export default class AddRule extends Component {
             action: "",
             status: "",
             missingFields: false,
-            ruleAdded: false
         }
     }
 
@@ -38,7 +37,13 @@ export default class AddRule extends Component {
                 action: this.state.action
             };
             try {
-                await ruleAxios.post('addrule', data);
+                await ruleAxios.post('addrule', data,
+                    {
+                        headers: {
+                            'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('user'))['access_token']}`,
+                            'Content-Type': 'application/json'
+                        }
+                    });
                 this.setState({ruleAdded: true});
                 this.props.handleAdd(data);
             } catch (error) {
@@ -52,7 +57,6 @@ export default class AddRule extends Component {
 
     render() {
         const showHideFieldsMissing = this.state.missingFields ? "text-danger display-block" : "display-none";
-        const ruleAdded = this.state.ruleAdded ? "text-success display-block bold" : "display-none";
         return (
             <div className='container'>
                 <h1 className="text-center mb-3">Add New Rule</h1>
@@ -86,7 +90,6 @@ export default class AddRule extends Component {
                         className="form-control"
                         onChange={this.handleChange}/>
                     <p className={showHideFieldsMissing}>Please fill All Fields!</p>
-                    <p className={ruleAdded}>User Added Successfully!</p>
                     <Button
                         type={"button"}
                         onClick={this.handleAdd}
