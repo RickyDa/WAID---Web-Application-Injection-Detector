@@ -7,8 +7,8 @@ class Action(enum.Enum):
 
 
 class RuleType(enum.Enum):
-    SQLI = 0
-    XSS = 1
+    INJECTION_ATTACK = 0
+    BLOCKED_HOST = 1
 
 
 class AnomalyStatus(enum.Enum):

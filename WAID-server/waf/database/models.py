@@ -62,3 +62,5 @@ class User(db.Model):
                f"Password - '{self.password}'," \
                f"Role - {self.role}'," \
                f"Created : - {self.date_created})"
+
+
