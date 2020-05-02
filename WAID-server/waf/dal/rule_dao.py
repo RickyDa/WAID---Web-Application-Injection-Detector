@@ -48,3 +48,7 @@ def update_rule(rule, new_rule):
         rule.action = new_rule.get("action")
     if rule.type != new_rule.get("type"):
         rule.type = new_rule.get("type")
+
+
+def read_rules_by_type(type_):
+    return Rule.query.filter_by(type=type_).all()

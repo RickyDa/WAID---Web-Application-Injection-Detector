@@ -1,15 +1,20 @@
 import os
 import warnings
+import joblib as jlb
+from waf import log
+from pathlib import Path
+import numpy as np
+import waf.logic.rule_service as rs
+from waf.database.models import Rule
+from waf.database.enums import RuleType
+from waf.database.enums import Action
 
 warnings.filterwarnings('ignore')
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
-import joblib as jlb
-from waf import log
 from tensorflow.keras.models import load_model
-from pathlib import Path
 from tensorflow.keras.preprocessing import sequence
-import numpy as np
+
 
 base_path = Path(__file__).parent
 models_path = str(base_path / "./models/")
@@ -40,7 +45,6 @@ class Classifier:
         self.lstm.load_weights(models_path + '/LSTM - waid-weights.h5')
 
     def predict(self, payload):
-        # TODO: make this block parallel
         _input = np.array([])
 
         for _, val in payload.inspected_value.items():
@@ -58,12 +62,9 @@ class Classifier:
             results = np.append(results, self.rf2.predict(v2))
             results = np.append(results, self.predict_rnn(val))
 
-            # print(results)
-            # counts = np.bincount(results)
-            # print(counts, np.argmax(counts))
-
             if np.argmax(np.bincount(results)) == 1:
                 log.info(f"Classifier predict True {val} - {results}")
+                rs.create(Rule(rule=payload.srcIP, type=RuleType.BLOCKED_HOST.value, action=Action.BLOCK.value))
                 return True
             log.info(f"Classifier predict False for {val} - {results}")
         return False
