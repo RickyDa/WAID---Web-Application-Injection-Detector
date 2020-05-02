@@ -17,6 +17,7 @@ this table stores all of the http traffic activity in the proxy
 
 class Payload(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    srcIP = db.Column(db.Text(), nullable=False)
     headers = db.Column(db.Text(), nullable=False)
     url = db.Column(db.Text(), nullable=True)
     body = db.Column(db.Text(), nullable=True)
@@ -26,7 +27,8 @@ class Payload(db.Model):
     date_created = db.Column(db.DateTime, default=datetime.now)
 
     def __repr__(self):
-        return f"Payload('{self.id}', Headers - {self.headers}, Type - {self.anomaly_status} , Body - {self.body}" \
+        return f"Payload('{self.id}', srcIP {self.srcIP}, Headers - {self.headers}, Type - {self.anomaly_status}, " \
+               f"Body - {self.body}" \
                f"' Payload type - {self.payload_type})"
 
 

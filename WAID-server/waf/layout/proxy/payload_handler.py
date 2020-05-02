@@ -1,10 +1,11 @@
 import json
-
+from flask import request
 from waf.database.models import Payload
 from waf.database.enums import PayloadType, AnomalyStatus
 
 
-def parse_payload(payload):
+def parse_payload(payload: request):
+    srcIP = payload.remote_addr
     headers = str(payload.headers)
     url = payload.url
     body = decode(payload.data)
@@ -14,7 +15,8 @@ def parse_payload(payload):
         value_to_inspect = {"form": list(payload.form.to_dict().values()), "data": decode(payload.data)}
     else:  # "GET"
         value_to_inspect = {"url": f'{payload.path}?{decode(payload.query_string)}'}
-    return Payload(headers=headers,
+    return Payload(srcIP=srcIP,
+                   headers=headers,
                    url=url,
                    body=body,
                    inspected_value=value_to_inspect,
