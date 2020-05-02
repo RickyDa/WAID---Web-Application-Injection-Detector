@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import "./login.css";
 import userAxios from '../User/userAxios';
-import { Redirect } from "react-router-dom"
+import {Redirect} from "react-router-dom"
 
 
 class Login extends Component {
@@ -30,18 +30,17 @@ class Login extends Component {
         };
         try {
             const {data} = await userAxios.post('login', userInfo);
-            this.props.handleLogin(data);
-            this.setState({redirect: true});
+            sessionStorage.clear();
+            sessionStorage.setItem('user',JSON.stringify(data));
+            this.setState({redirect: true},()=>console.log(this.state));
         } catch (error) {
-            if (error.response.status === 500) {
-                this.setState({wrongEmailOrPassword: true});
-            }
-            console.log('error on login', error);
+            this.setState({wrongEmailOrPassword: true});
+            console.log('Error on login', error);
         }
     };
 
     render() {
-        if (this.state.redirect) {
+        if (this.state.redirect || sessionStorage.getItem('user')) {
             return <Redirect to={'./control-panel'}/>
         }
         const showEmailAndPasswordError = this.state.wrongEmailOrPassword ? "text-danger display-block" : "display-none";

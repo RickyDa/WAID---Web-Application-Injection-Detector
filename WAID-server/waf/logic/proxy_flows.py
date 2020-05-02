@@ -40,6 +40,8 @@ class Flows:
         return Response(response.content, status=response.status_code, content_type=response.headers['content-type'])
 
     def _client_flow(self, payload):
+        if self._ping_server():
+            return self._send_to_server()
         if analyzer.analyze(payload):
             return Response(status=403)
         else:
@@ -70,3 +72,22 @@ class Flows:
     def _use_classifier(self, payload):
         if self.classifier.predict(payload):
             payload.anomaly_status = AnomalyStatus.ATTACK.value
+
+    @staticmethod
+    def _ping_server():
+        host = config.get_value("server_ip", "")
+        if host == "":
+            return
+        param = '-n' if platform.system().lower() == 'windows' else '-c'
+        command = ['ping', param, '1', host]
+
+        return subprocess.call(command) == 0
+
+    @staticmethod
+    def _send_to_server():
+        data = self.request.data if self.request.content_type == 'application/json' else self.request.form
+        response = send_request(self.request.method,
+                                f"https://{config.get_value('server_ip', '')}{self.path}?" /
+                                f"{self.request.query_string.decode('utf8')}",
+                                data=data)
+        return Response(response.content, status=response.status_code, content_type=response.headers['content-type'])

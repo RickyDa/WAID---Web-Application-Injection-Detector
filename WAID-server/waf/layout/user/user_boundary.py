@@ -1,3 +1,5 @@
+from flask_jwt_extended import create_access_token, create_refresh_token
+
 from waf.database.models import User
 
 
@@ -11,9 +13,12 @@ class UserPayload:
 
     def serialize(self):
         return {"id": self.id,
-                "email":self.mail,
+                "email": self.mail,
                 "username": self.username,
-                "role": self.role}
+                "role": self.role,
+                "access_token": create_access_token(identity=self.username),
+                "refresh_token": create_refresh_token(identity=self.username)
+                }
 
 
 def parse_user(payload):

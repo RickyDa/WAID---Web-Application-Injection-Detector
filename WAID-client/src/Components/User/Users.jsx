@@ -7,6 +7,7 @@ import EditUser from "./EditUser";
 import {Redirect} from "react-router-dom";
 import axios from "axios";
 import './Users.css';
+
 class Users extends Component {
 
     constructor(props) {
@@ -23,9 +24,13 @@ class Users extends Component {
     source = this.CancelToken.source();
 
     componentDidMount = async () => {
+
         try {
             const {data} = await userAxios.get(`/getall`, {
-                cancelToken: this.source.token
+                cancelToken: this.source.token,
+                headers: {
+                    'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('user'))['access_token']}`,
+                }
             });
             this.setState({usersList: data})
         } catch (error) {
@@ -67,7 +72,11 @@ class Users extends Component {
 
     updateTable = async () => {
         try {
-            const {data} = await userAxios.get(`/getall`);
+            const {data} = await userAxios.get(`/getall`, {
+                headers: {
+                    'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('user'))['access_token']}`,
+                }
+            });
             this.setState({usersList: data})
         } catch (error) {
             console.log('error on delete', error);
@@ -76,7 +85,11 @@ class Users extends Component {
 
     handleDelete = async () => {
         try {
-            const {status} = await userAxios.delete(`/delete/${this.state.currentUser.id}`);
+            const {status} = await userAxios.delete(`/delete/${this.state.currentUser.id}`,{
+                headers: {
+                    'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('user'))['access_token']}`,
+                }
+            });
             if (status) {
                 this.hideModal()
             } else {
@@ -111,13 +124,13 @@ class Users extends Component {
     };
 
     render() {
-        if (!this.props.state.isLogin) {
+        if (!sessionStorage.getItem('user')) {
             return <Redirect to={'./'}/>
         }
         return (
             <div>
                 <AddUser handleAdd={this.handleAdd}/>
-                <table className="container table table-striped table-dark mt-5">
+                <table className="container table table-striped text-center table-dark mt-5">
                     <thead className="thead-dark">
                     <tr>
                         <th>ID</th>

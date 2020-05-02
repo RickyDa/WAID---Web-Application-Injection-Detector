@@ -7,6 +7,7 @@ import EditRule from "./EditRule";
 import {Redirect} from "react-router-dom";
 import axios from "axios";
 import './Rules.css';
+
 class Rules extends Component {
 
     constructor(props) {
@@ -26,7 +27,11 @@ class Rules extends Component {
     componentDidMount = async () => {
         try {
             const {data} = await ruleAxios.get(`/getall`, {
-                cancelToken: this.source.token
+                cancelToken: this.source.token,
+                headers: {
+                    'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('user'))['access_token']}`,
+                    'Content-Type': 'application/json'
+                }
             });
             this.setState({rulesLists: data})
         } catch (error) {
@@ -43,7 +48,7 @@ class Rules extends Component {
     };
 
     hideModal = () => {
-        this.setState({show: false, currentRule: {}}, ()=> this.updateTable());
+        this.setState({show: false, currentRule: {}}, () => this.updateTable());
     };
 
     createTable = (rule) => {
@@ -62,12 +67,17 @@ class Rules extends Component {
     };
 
     handleAdd = (data) => {
-        this.setState({lastAddedRule: data},()=> this.updateTable());
+        this.setState({lastAddedRule: data}, () => this.updateTable());
     };
 
     updateTable = async () => {
         try {
-            const {data} = await ruleAxios.get(`/getall`);
+            const {data} = await ruleAxios.get(`/getall`, {
+                headers: {
+                    'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('user'))['access_token']}`,
+                    'Content-Type': 'application/json'
+                }
+            });
             this.setState({rulesLists: data})
         } catch (error) {
             console.log('error on update table', error);
@@ -75,7 +85,12 @@ class Rules extends Component {
     };
     handleDelete = async () => {
         try {
-            const {status} = await ruleAxios.delete(`/delete/${this.state.currentRule.id}`);
+            const {status} = await ruleAxios.delete(`/delete/${this.state.currentRule.id}`,{
+                headers: {
+                    'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('user'))['access_token']}`,
+                    'Content-Type': 'application/json'
+                }
+            });
             if (status) {
                 this.hideModal()
             } else {
@@ -98,7 +113,13 @@ class Rules extends Component {
     handleUpdate = async (e) => {
         e.preventDefault();
         try {
-            const {status} = await ruleAxios.put(`/update/${this.state.currentRule.id}`, this.state.currentRule);
+            const {status} = await ruleAxios.put(`/update/${this.state.currentRule.id}`,{
+                data: this.state.currentRule,
+                headers: {
+                    'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('user'))['access_token']}`,
+                    'Content-Type': 'application/json'
+                }
+            });
             if (status) {
                 this.hideModal()
             } else {
@@ -110,7 +131,7 @@ class Rules extends Component {
     };
 
     render() {
-        if (!this.props.state.isLogin) {
+        if (!sessionStorage.getItem('user')) {
             return <Redirect to={'./'}/>
         }
         return (
@@ -126,7 +147,8 @@ class Rules extends Component {
                         <th>Edit</th>
                     </tr>
                     </thead>
-                    {this.state.rulesLists && <tbody>{this.state.rulesLists.map(rule => this.createTable(rule))}</tbody>}
+                    {this.state.rulesLists &&
+                    <tbody>{this.state.rulesLists.map(rule => this.createTable(rule))}</tbody>}
                 </table>
                 <Modal show={this.state.show} handleClose={this.hideModal}>
                     <EditRule handleClose={this.hideModal} handleCurrentRule={this.handleCurrentRule}
