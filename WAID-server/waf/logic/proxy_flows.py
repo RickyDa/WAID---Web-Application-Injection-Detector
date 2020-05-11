@@ -98,7 +98,6 @@ class Flows:
     def _send_to_server(self):
         data = self.request.data if self.request.content_type == 'application/json' else self.request.form
         response = send_request(self.request.method,
-                                f"https://{config.get_value('server_ip', '')}{self.path}?" /
-                                f"{self.request.query_string.decode('utf8')}",
-                                data=data)
+                                f"https://{config.get_value('server_ip', '')}:5000/{self.path}?{self.request.query_string.decode('utf8')}",
+                                data=data,verify=False)
         return Response(response.content, status=response.status_code, content_type=response.headers['content-type'])
