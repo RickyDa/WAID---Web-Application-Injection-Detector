@@ -1,11 +1,14 @@
 ############################################################
+import platform
+import subprocess
+
 from flask import Response
 from requests import request as send_request
 ############################################################
 from waf import log, config
 from waf.database.models import AnomalyStatus
 from waf.layout.proxy.payload_handler import parse_payload
-from waf.logic import payloadService, analyzer
+from waf.logic import payload_service, analyzer
 
 
 ############################################################
@@ -57,7 +60,7 @@ class Flows:
         if is_classifier and payload.anomaly_status != AnomalyStatus.ATTACK.value:
             self._use_classifier(payload)
 
-        payloadService.create_payload_request(payload)
+        payload_service.create_payload_request(payload)
 
         if payload.anomaly_status == AnomalyStatus.ATTACK.value:
             return Response(status=403)
@@ -78,13 +81,21 @@ class Flows:
         host = config.get_value("server_ip", "")
         if host == "":
             return
+
+        first = Flows._ping(host)
+        if not first:
+            second = Flows._ping(host)
+            return True if second else False
+        return True
+
+    @staticmethod
+    def _ping(host):
         param = '-n' if platform.system().lower() == 'windows' else '-c'
         command = ['ping', param, '1', host]
 
         return subprocess.call(command) == 0
 
-    @staticmethod
-    def _send_to_server():
+    def _send_to_server(self):
         data = self.request.data if self.request.content_type == 'application/json' else self.request.form
         response = send_request(self.request.method,
                                 f"https://{config.get_value('server_ip', '')}{self.path}?" /

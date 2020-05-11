@@ -26,7 +26,7 @@ class Classifier:
         # load Tokenizers & vectorizer
         self.vectorizer = jlb.load(models_path + '/vectorizer.joblib')
         self.vectorizer2 = jlb.load(models_path + '/vectorizer2.joblib')
-        self.tokenizer = jlb.load(models_path + '/LSTM - waid-tokenizer.pickle')
+        self.tokenizer = jlb.load(models_path + '/waid-tokenizer.pickle')
 
         # 1 - 2 load logistic regression
         self.logreg = jlb.load(models_path + '/logreg.joblib')
@@ -41,8 +41,8 @@ class Classifier:
         self.rf2 = jlb.load(models_path + '/random-forest2.joblib')
 
         # 7 - load RNN LSTM model
-        self.lstm = load_model(models_path + '/LSTM - waid-model.h5')
-        self.lstm.load_weights(models_path + '/LSTM - waid-weights.h5')
+        self.lstm = load_model(models_path + '/waid-model.h5')
+        self.lstm.load_weights(models_path + '/waid-weights.h5')
 
     def predict(self, payload):
         _input = np.array([])

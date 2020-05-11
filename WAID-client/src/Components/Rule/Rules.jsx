@@ -137,7 +137,7 @@ class Rules extends Component {
         return (
             <div>
                 <AddRule handleAdd={this.handleAdd}/>
-                <table className="container table table-striped table-dark mt-5">
+                <table className="container table table-striped text-center table-dark mt-5">
                     <thead className="thead-dark">
                     <tr>
                         <th>Id</th>
