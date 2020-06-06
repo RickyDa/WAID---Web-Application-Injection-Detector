@@ -15,3 +15,8 @@ class RuleSchema(ma.Schema):
 class UserSchema(ma.Schema):
     class Meta:
         fields = ("id", "username", "password", "action", "role")
+
+
+class RuleDaemonSchema(ma.Schema):
+    class Meta:
+        fields = ("rule", "type", "action", "date_created")

@@ -2,13 +2,15 @@
 from flask import request, jsonify, Response
 ##################################################
 from flask_jwt_extended import jwt_required
-
+import json
 from waf import app, log
 from waf.layout.rule.rule_boundary import RulePayload, parse_rule
 from waf.logic import rule_service
 
 import boto3
 from botocore.exceptions import ClientError
+
+
 ##################################################
 
 
@@ -53,7 +55,9 @@ def upload_db():
         aws_secret_access_key='oJHxXAoxGSPHeFBlfP8ZXr0j2xfUvhxe/XCuzwOz')
     try:
         # TODO: Add to config the path of the db file to be uploaded. add a data stracture of the newly added rules
-        s3_client.upload_file('C:/Users/ricky/Desktop/WAID/WAID---Web-Application-Injection-Detector/WAID-server/waf/logic/models/waid-model.h5', 'waid-db', 'waid-model.h5')
+        s3_client.upload_file(
+            'C:/Users/ricky/Desktop/WAID/WAID---Web-Application-Injection-Detector/WAID-server/waf/logic/models/waid-model.h5',
+            'waid-db', 'waid-model.h5')
         # TODO: Log the status after the uploading a file
         return Response(status=200)
     except ClientError as e:
@@ -62,4 +66,7 @@ def upload_db():
         return Response(status=500)
 
 
-
+@app.route('/rule/collect', methods=['POST'])
+def collect_rules():
+    rules = rule_service.add_rules(request.json)
+    return Response(status=200)
