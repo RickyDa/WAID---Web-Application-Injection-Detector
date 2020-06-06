@@ -18,6 +18,7 @@ log = log
 config = Config()
 app = Flask(__name__)
 app.config['SECRET_KEY'] = config.get_value('SECRET_KEY', secrets.token_hex(16))
+# Hard Coded
 app.config['SQLALCHEMY_DATABASE_URI'] = config.get_value('SQLALCHEMY_DATABASE_URI', 'sqlite:///database/server.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)

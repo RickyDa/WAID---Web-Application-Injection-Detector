@@ -7,11 +7,12 @@ from waf import app, log
 from waf.layout.rule.rule_boundary import RulePayload, parse_rule
 from waf.logic import rule_service
 
+import boto3
+from botocore.exceptions import ClientError
 ##################################################
 
 
 @app.route('/rule/addrule', methods=['POST'])
-@jwt_required
 def create_rule():
     log.info(f"Adding Rule - {request} ")
     rv = rule_service.create(parse_rule(request))
@@ -19,7 +20,6 @@ def create_rule():
 
 
 @app.route('/rule/getall', methods=['GET'])
-@jwt_required
 def get_all_rules():
     return jsonify(rule_service.get_all_rules())
 
@@ -42,5 +42,24 @@ def update_rule_by_id(rule_id):
         return Response(status=200)
     else:
         return Response(status=500)
+
+
+@app.route('/rule/upload', methods=['POST'])
+def upload_db():
+    s3_client = boto3.client(
+        's3',
+        # TODO: add to config file the aws credtials and give the user the option to edit it.
+        aws_access_key_id='AKIAJ72EHZL77N3Q2JTQ',
+        aws_secret_access_key='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')
+    try:
+        # TODO: Add to config the path of the db file to be uploaded. add a data stracture of the newly added rules
+        s3_client.upload_file('C:/Users/ricky/Desktop/WAID/WAID---Web-Application-Injection-Detector/WAID-server/waf/logic/models/waid-model.h5', 'waid-db', 'waid-model.h5')
+        # TODO: Log the status after the uploading a file
+        return Response(status=200)
+    except ClientError as e:
+        # TODO: Log the status after the uploading a file
+        print(e)
+        return Response(status=500)
+
 
 
