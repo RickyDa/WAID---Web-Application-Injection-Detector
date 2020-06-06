@@ -1,6 +1,6 @@
 ##################################################
 import datetime
-
+from waf.scheduler import sched
 from logger.log import log
 from config.config_handler import Config
 ##################################################
@@ -37,7 +37,7 @@ from waf.layout.proxy import proxy
 
 base_path = Path(__file__).parent
 file_path = (base_path / "./database/server.db").resolve()
-
+sched.start()
 if not file_path.is_file():
     from waf.database.models import User
     from waf.logic import rule_service, user_service
