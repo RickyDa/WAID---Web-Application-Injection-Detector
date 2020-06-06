@@ -14,3 +14,5 @@ flows = Flows(waidAI)
 def send_receive(path):
     log.info(f"Getting request - {request} from - {request.remote_addr}")
     return flows.main_flow(request, path)
+
+

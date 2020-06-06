@@ -9,7 +9,7 @@ class PayloadSchema(ma.Schema):
 
 class RuleSchema(ma.Schema):
     class Meta:
-        fields = ("id", "rule", "type", "action")
+        fields = ("id", "rule", "type", "action", "date_created")
 
 
 class UserSchema(ma.Schema):

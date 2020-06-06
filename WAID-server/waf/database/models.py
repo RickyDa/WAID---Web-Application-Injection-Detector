@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from waf import db
+
 from waf.database.enums import AnomalyStatus, Action
 
 '''
@@ -62,5 +63,3 @@ class User(db.Model):
                f"Password - '{self.password}'," \
                f"Role - {self.role}'," \
                f"Created : - {self.date_created})"
-
-
