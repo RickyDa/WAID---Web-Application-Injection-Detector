@@ -5,12 +5,15 @@ services:
   server:
 
     build: WAID-server/
+        args:
+            MODE: --client
        
     ports:
       - 5000:5000
 
   client:
     build: WAID-client/
+    stdin_open: true
 
     depends_on:
       - server

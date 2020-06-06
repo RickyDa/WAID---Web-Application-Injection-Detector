@@ -22,7 +22,7 @@ class Config:
             'site_address': 'https://redtiger.labs.overthewire.org/',
             'SECRET_KEY': secrets.token_hex(16),
             'SQLALCHEMY_DATABASE_URI': 'sqlite:///database/server.db',
-            'is_client': False,
+            'is_client': True,
             'server_ip': '',
             'is_active': True,
             'is_analyzer': True,
