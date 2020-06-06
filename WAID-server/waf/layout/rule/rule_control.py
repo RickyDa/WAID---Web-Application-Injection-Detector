@@ -54,7 +54,7 @@ def upload_db():
         aws_access_key_id='AKIAJ72EHZL77N3Q2JTQ',
         aws_secret_access_key='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')
     try:
-        # TODO: Add to config the path of the db file to be uploaded. add a data stracture of the newly added rules
+        # TODO: Add to config the path of the db file to be uploaded
         s3_client.upload_file(
             'C:/Users/ricky/Desktop/WAID/WAID---Web-Application-Injection-Detector/WAID-server/waf/logic/models/waid-model.h5',
             'waid-db', 'waid-model.h5')
