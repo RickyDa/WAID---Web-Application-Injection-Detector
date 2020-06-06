@@ -5,10 +5,11 @@ from waf.database.models import Rule
 from waf.database.schemas import RuleSchema
 
 
-def create_rule(rule):
-    db.session.add(rule)
+def create_rule(rules):
+    for rule in rules:
+        db.session.add(rule)
     db.session.commit()
-    return rule
+    return rules
 
 
 def read_all_rules_json():
@@ -52,3 +53,9 @@ def update_rule(rule, new_rule):
 
 def read_rules_by_type(type_):
     return Rule.query.filter_by(type=type_).all()
+
+
+def read_all_rules_without_id():
+    rule_schema = RuleSchema(many=True)
+    rules = Rule.query.with_entities(Rule.rule, Rule.type, Rule.action, Rule.date_created).all()
+    return rule_schema.dump(obj=rules)

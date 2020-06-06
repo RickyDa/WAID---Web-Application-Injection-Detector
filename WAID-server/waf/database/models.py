@@ -47,6 +47,9 @@ class Rule(db.Model):
                f"Action - {self.action}'," \
                f"Created : - {self.date_created})"
 
+    def __eq__(self, other):
+        return self.rule == other.rule
+
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
