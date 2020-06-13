@@ -28,7 +28,9 @@ class Config:
             'is_analyzer': True,
             'is_classifier': True,
             'mail': "waidwaf@gmail.com",
-            'mail_password': "rickyronen"
+            'mail_password': "rickyronen",
+            'aws_access_key_id': '',
+            'aws_secret_access_key': ''
         }
         with open(str(FILE_PATH), 'w') as configfile:
             CONFIG_PARSER.write(configfile)

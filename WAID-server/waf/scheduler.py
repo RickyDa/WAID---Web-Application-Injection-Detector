@@ -9,13 +9,6 @@ import requests
 sched = BackgroundScheduler()
 
 
-##################################################
-# TODO : arrange functions to server or client define the which functions needed according to the system's mode
-#   -Add emailaing function After uploading the server DB file to s3
-#   -Notice there are other tasks on upload_db
-##################################################
-
-
 @sched.scheduled_job('cron', id='server_task', hour=2, minute=00)
 def scheduled_upload_db():
     if config.get_value('is_client', 'True') == 'False':
