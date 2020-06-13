@@ -2,7 +2,6 @@
 from flask import request, jsonify, Response
 ##################################################
 from flask_jwt_extended import jwt_required
-import json
 from waf import app, log
 from waf.layout.rule.rule_boundary import RulePayload, parse_rule
 from waf.logic import rule_service
@@ -19,6 +18,7 @@ from botocore.exceptions import ClientError
 def create_rule():
     log.info(f"Adding Rule - {request} ")
     rv = rule_service.create(parse_rule(request))
+    print(rule_service.get_rules_of_today())
     return jsonify(RulePayload(rv.id, rv.rule, rv.type, rv.action).serialize())
 
 

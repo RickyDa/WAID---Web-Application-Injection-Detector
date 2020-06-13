@@ -28,4 +28,4 @@ def update_rules_mail(rules):
     subject = f"New Rules for {str(date)}"
     recipients = get_users_mails()
     text = "New rules - \n" + __prepare_rules(rules)
-    __send_mail(subject, recipients,text)
+    __send_mail(subject, recipients, text)
