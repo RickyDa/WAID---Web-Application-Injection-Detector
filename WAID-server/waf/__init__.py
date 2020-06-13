@@ -3,7 +3,7 @@ import datetime
 
 from flask_mail import Mail
 
-from waf.scheduler import sched
+
 from logger.log import log
 from config.config_handler import Config
 ##################################################
@@ -37,6 +37,7 @@ from waf.layout.rule import rule_control
 from waf.layout.user import user_control
 from waf.layout.config import config_control
 from waf.layout.proxy import proxy
+from waf.scheduler import sched
 
 app.config.update(dict(
     DEBUG=True,

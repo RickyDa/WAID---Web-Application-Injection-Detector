@@ -7,6 +7,7 @@ from waf import app, log
 from waf.layout.rule.rule_boundary import RulePayload, parse_rule
 from waf.logic import rule_service
 
+from pathlib import Path
 import boto3
 from botocore.exceptions import ClientError
 
@@ -46,6 +47,10 @@ def update_rule_by_id(rule_id):
         return Response(status=500)
 
 
+base_path = Path(__file__).parent
+db_path = (base_path / "./database/server.db")
+
+
 @app.route('/rule/upload', methods=['POST'])
 def upload_db():
     s3_client = boto3.client(
@@ -55,10 +60,23 @@ def upload_db():
         aws_secret_access_key='oJHxXAoxGSPHeFBlfP8ZXr0j2xfUvhxe/XCuzwOz')
     try:
         # TODO: Add to config the path of the db file to be uploaded
-        s3_client.upload_file(
-            'C:/Users/ricky/Desktop/WAID/WAID---Web-Application-Injection-Detector/WAID-server/waf/logic/models/waid-model.h5',
-            'waid-db', 'waid-model.h5')
+        s3_client.upload_file(db_path, 'waid-db', 'server.db')
         # TODO: Log the status after the uploading a file
+        return Response(status=200)
+    except ClientError as e:
+        # TODO: Log the status after the uploading a file
+        print(e)
+        return Response(status=500)
+
+
+@app.route('/rule/download', methods=['GET'])
+def download_db():
+    s3 = boto3.client(
+        's3',
+        aws_access_key_id='AKIAJ72EHZL77N3Q2JTQ',
+        aws_secret_access_key='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')
+    try:
+        s3.download_file('waid-db', 'server.db', db_path)
         return Response(status=200)
     except ClientError as e:
         # TODO: Log the status after the uploading a file
