@@ -3,7 +3,10 @@ import ruleAxios from './ruleAxios'
 import Input from '../Utils/Input'
 import Select from '../Utils/Select'
 import Button from "../Utils/Button";
-
+import https from 'https';
+const agent = new https.Agent({
+    rejectUnauthorized: false
+});
 
 export default class AddRule extends Component {
     constructor(props) {
@@ -42,7 +45,8 @@ export default class AddRule extends Component {
                         headers: {
                             'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('user'))['access_token']}`,
                             'Content-Type': 'application/json'
-                        }
+                        },
+                        httpsAgent: agent
                     });
                 this.setState({ruleAdded: true});
                 this.props.handleAdd(data);
@@ -71,8 +75,8 @@ export default class AddRule extends Component {
                         label="Type"
                         options={[
                             {key: "", value: ""},
-                            {key: "0", value: "SQL Injection"},
-                            {key: "1", value: "XSS"}
+                            {key: "0", value: "Injection Attack"},
+                            {key: "1", value: "Blocked Host"}
                         ]}
                         name="type"
                         defaultValue={this.state.type ? this.state.type : ""}

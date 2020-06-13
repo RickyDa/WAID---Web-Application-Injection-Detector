@@ -8,6 +8,11 @@ import Input from "../Utils/Input";
 import Button from "../Utils/Button";
 import {Redirect} from "react-router-dom";
 import TableOption from "./TableOption";
+import https from 'https';
+
+const agent = new https.Agent({
+    rejectUnauthorized: false
+});
 
 class Settings extends Component {
     _isMounted = false;
@@ -37,7 +42,8 @@ class Settings extends Component {
                 headers: {
                     'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('user'))['access_token']}`,
                     'Content-Type': 'application/json'
-                }
+                },
+                httpsAgent: agent
             });
             if (this._isMounted) {
                 this.setState({
@@ -64,7 +70,8 @@ class Settings extends Component {
                 headers: {
                     'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('user'))['access_token']}`,
                     'Content-Type': 'application/json'
-                }
+                },
+                httpsAgent: agent
             });
             this.setState({
                 isActive: data["is_active"] === 'True',
@@ -98,7 +105,8 @@ class Settings extends Component {
                     headers: {
                         'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('user'))['access_token']}`,
                         'Content-Type': 'application/json'
-                    }
+                    },
+                    httpsAgent: agent
                 });
                 if (status === 200)
                     this.handleGetConfig()
@@ -119,7 +127,8 @@ class Settings extends Component {
                 const {status} = await confAxios.post('/set_is_active', data, {
                     headers: {
                         'Authorization': 'Bearer ' + JSON.parse(sessionStorage.getItem('user'))['access_token'],
-                    }
+                    },
+                    httpsAgent: agent
                 });
                 if (status === 200)
                     this.handleGetConfig()
@@ -141,7 +150,8 @@ class Settings extends Component {
                             headers: {
                                 'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('user'))['access_token']}`,
                                 'Content-Type': 'application/json'
-                            }
+                            },
+                            httpsAgent: agent
                         });
                     if (status === 200)
                         this.handleGetConfig()
@@ -165,7 +175,8 @@ class Settings extends Component {
                     {
                         headers: {
                             'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('user'))['access_token']}`
-                        }
+                        },
+                        httpsAgent: agent
                     });
                 if (status === 200)
                     this.handleGetConfig()
@@ -183,7 +194,8 @@ class Settings extends Component {
                 {
                     headers: {
                         'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('user'))['access_token']}`,
-                    }
+                    },
+                    httpsAgent: agent
                 });
             if (status === 200)
                 this.handleGetConfig()
@@ -199,7 +211,8 @@ class Settings extends Component {
                 {
                     headers: {
                         'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('user'))['access_token']}`,
-                    }
+                    },
+                    httpsAgent: agent
                 });
             if (status === 200)
                 this.handleGetConfig()

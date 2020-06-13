@@ -2,7 +2,10 @@ import React, {Component} from "react";
 import "./login.css";
 import userAxios from '../User/userAxios';
 import {Redirect} from "react-router-dom"
-
+import https from 'https';
+const agent = new https.Agent({
+    rejectUnauthorized: false
+});
 
 class Login extends Component {
     constructor(props) {
@@ -29,7 +32,7 @@ class Login extends Component {
             password: this.state.password
         };
         try {
-            const {data} = await userAxios.post('login', userInfo);
+            const {data} = await userAxios.post('login', userInfo,{httpsAgent: agent});
             sessionStorage.clear();
             sessionStorage.setItem('user',JSON.stringify(data));
             this.setState({redirect: true},()=>console.log(this.state));

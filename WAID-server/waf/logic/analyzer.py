@@ -47,6 +47,8 @@ def validate_payload(payload):
 def inspect_payload_values(value, rules):
     for rule in rules:
         r = re.compile(rule.rule)
+        if type(value) == list:
+            value = " ".join(value)
         if r.search(value):
             return True
     return False

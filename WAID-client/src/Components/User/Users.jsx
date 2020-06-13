@@ -7,6 +7,11 @@ import EditUser from "./EditUser";
 import {Redirect} from "react-router-dom";
 import axios from "axios";
 import './Users.css';
+import https from 'https';
+
+const agent = new https.Agent({
+    rejectUnauthorized: false
+});
 
 class Users extends Component {
 
@@ -30,7 +35,8 @@ class Users extends Component {
                 cancelToken: this.source.token,
                 headers: {
                     'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('user'))['access_token']}`,
-                }
+                },
+                httpsAgent: agent
             });
             this.setState({usersList: data})
         } catch (error) {
@@ -75,7 +81,8 @@ class Users extends Component {
             const {data} = await userAxios.get(`/getall`, {
                 headers: {
                     'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('user'))['access_token']}`,
-                }
+                },
+                httpsAgent: agent
             });
             this.setState({usersList: data})
         } catch (error) {
@@ -85,10 +92,11 @@ class Users extends Component {
 
     handleDelete = async () => {
         try {
-            const {status} = await userAxios.delete(`/delete/${this.state.currentUser.id}`,{
+            const {status} = await userAxios.delete(`/delete/${this.state.currentUser.id}`, {
                 headers: {
                     'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('user'))['access_token']}`,
-                }
+                },
+                httpsAgent: agent
             });
             if (status) {
                 this.hideModal()
