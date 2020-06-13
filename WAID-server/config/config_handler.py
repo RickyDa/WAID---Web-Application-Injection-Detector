@@ -26,7 +26,9 @@ class Config:
             'server_ip': '',
             'is_active': True,
             'is_analyzer': True,
-            'is_classifier': True
+            'is_classifier': True,
+            'mail': "waidwaf@gmail.com",
+            'mail_password': "rickyronen"
         }
         with open(str(FILE_PATH), 'w') as configfile:
             CONFIG_PARSER.write(configfile)

@@ -28,6 +28,10 @@ def get_all():
     return user_schema.dump(obj=User.query.with_entities(User.id, User.username, User.mail, User.role).all())
 
 
+def get_users_mails():
+    User.query.with_entities(User.mail).all()
+
+
 def delete_user_by_id(user_id):
     user = get_user_by_id(user_id)
     if user:

@@ -1,5 +1,8 @@
 ##################################################
 import datetime
+
+from flask_mail import Mail
+
 from waf.scheduler import sched
 from logger.log import log
 from config.config_handler import Config
@@ -35,12 +38,24 @@ from waf.layout.user import user_control
 from waf.layout.config import config_control
 from waf.layout.proxy import proxy
 
+app.config.update(dict(
+    DEBUG=True,
+    MAIL_SERVER='smtp.gmail.com',
+    MAIL_PORT=587,
+    MAIL_USE_TLS=True,
+    MAIL_USE_SSL=False,
+    MAIL_USERNAME=config.get_value("mail", "waidwaf@gmail.com"),
+    MAIL_PASSWORD=config.get_value("mail_pass", "rickyronen"),
+))
+
+mail = Mail(app)
 base_path = Path(__file__).parent
 file_path = (base_path / "./database/server.db").resolve()
 sched.start()
 if not file_path.is_file():
     from waf.database.models import User
     from waf.logic import rule_service, user_service
+
     db.drop_all()
     db.create_all()
     user_service.create(User(username='admin', password='admin', mail='admin@admin.com', role=0))
