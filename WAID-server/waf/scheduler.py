@@ -1,8 +1,9 @@
 from apscheduler.schedulers.background import BackgroundScheduler
 
-from waf.dal.rule_dao import read_all_rules_json, create_rule
-from waf.layout.rule.rule_control import upload_db
+from waf.dal.rule_dao import read_all_rules_json, get_all_rules_by_time_delta
+from waf.layout.rule.rule_control import upload_db, download_db
 from waf import config
+from waf.logic.mail_handler import update_rules_mail
 import requests
 
 sched = BackgroundScheduler()
@@ -11,7 +12,6 @@ sched = BackgroundScheduler()
 ##################################################
 # TODO : arrange functions to server or client define the which functions needed according to the system's mode
 #   -Add emailaing function After uploading the server DB file to s3
-#   -Change the path on upload_db function to the correct db file.
 #   -Notice there are other tasks on upload_db
 ##################################################
 
@@ -20,7 +20,7 @@ sched = BackgroundScheduler()
 def scheduled_upload_db():
     if config.get_value('is_client', 'True') == 'False':
         upload_db()
-    # TODO : email Update to the admins after task is done
+        update_rules_mail(get_all_rules_by_time_delta(dt=2))
 
 
 @sched.scheduled_job('cron', id='client_task_collect')  # every 00:00 clients will send their rules to the server
@@ -30,9 +30,8 @@ def scheduled_db_collection():
         response = requests.post(url=SERVER_ADDRESS, json=read_all_rules_json())
 
 
-@sched.scheduled_job('cron', id='client_task_update')  # every 00:00 clients will send their rules to the server
+@sched.scheduled_job('cron', id='client_task_update', hour=4,
+                     minute=00)  # every 04:00 clients will download the updated db
 def scheduled_db_update():
     if config.get_value('is_client', 'True') == 'True':
-        # TODO: add method to download updated server.db file from s3
-        # download_db()
-        pass
+        download_db()

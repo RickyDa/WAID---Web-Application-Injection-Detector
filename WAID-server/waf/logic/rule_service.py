@@ -42,5 +42,9 @@ def rules_to_obj(j_rules):
     rules = []
     for rule in j_rules:
         rules.append(Rule(rule=rule['rule'], type=rule['type'], action=rule['action'],
-                          date_created=datetime.datetime.strptime(rule['date_created'],'%Y-%m-%dT%H:%M:%S.%f')))
+                          date_created=datetime.datetime.strptime(rule['date_created'], '%Y-%m-%dT%H:%M:%S.%f')))
     return rules
+
+
+def get_rules_of_today():
+    return dao.get_all_rules_by_time_delta(dt=2)

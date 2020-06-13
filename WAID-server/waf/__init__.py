@@ -3,7 +3,6 @@ import datetime
 
 from flask_mail import Mail
 
-
 from logger.log import log
 from config.config_handler import Config
 ##################################################
@@ -32,6 +31,7 @@ app.config['JWT_SECRET_KEY'] = config.get_value('SECRET_KEY', secrets.token_hex(
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = datetime.timedelta(days=1)
 jwt = JWTManager(app)
 jwt._set_error_handler_callbacks(app)
+mail = Mail(app)
 
 from waf.layout.rule import rule_control
 from waf.layout.user import user_control
@@ -49,7 +49,7 @@ app.config.update(dict(
     MAIL_PASSWORD=config.get_value("mail_pass", "rickyronen"),
 ))
 
-mail = Mail(app)
+
 base_path = Path(__file__).parent
 file_path = (base_path / "./database/server.db").resolve()
 sched.start()

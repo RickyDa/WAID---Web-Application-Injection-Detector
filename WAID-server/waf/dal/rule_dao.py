@@ -3,6 +3,7 @@ from flask import jsonify
 from waf import db
 from waf.database.models import Rule
 from waf.database.schemas import RuleSchema
+import datetime
 
 
 def create_rule(rules):
@@ -59,3 +60,9 @@ def read_all_rules_without_id():
     rule_schema = RuleSchema(many=True)
     rules = Rule.query.with_entities(Rule.rule, Rule.type, Rule.action, Rule.date_created).all()
     return rule_schema.dump(obj=rules)
+
+
+def get_all_rules_by_time_delta(dt):
+    today = datetime.date.today()
+    delta = today - datetime.timedelta(days=dt)
+    return Rule.query.filter(Rule.date_created < today).filter(Rule.date_created > delta).all()
