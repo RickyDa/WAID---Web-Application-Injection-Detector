@@ -25,8 +25,8 @@ export default class EditRule extends Component {
                         <Select
                             label="Type"
                             options={[
-                                {key: "0", value: "SQL Injection"},
-                                {key: "1", value: "XSS"}
+                                {key: "0", value: "Injection Attack"},
+                                {key: "1", value: "Blocked Host"}
                             ]}
                             name="type"
                             defaultValue={type ? type : "0"}

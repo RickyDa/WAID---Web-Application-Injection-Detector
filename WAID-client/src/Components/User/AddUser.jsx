@@ -3,9 +3,14 @@ import userAxios from './userAxios'
 import Input from '../Utils/Input'
 import Select from '../Utils/Select'
 import Button from "../Utils/Button";
+import https from 'https';
 
 const passwordRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})");
 const emailRegex = new RegExp(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,15}/);
+const agent = new https.Agent({
+    rejectUnauthorized: false
+});
+
 export default class AddUser extends Component {
     constructor(props) {
         super(props);
@@ -62,7 +67,8 @@ export default class AddUser extends Component {
                             headers: {
                                 'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('user'))['access_token']}`,
                                 'Content-Type': 'application/json'
-                            }
+                            },
+                            httpsAgent: agent
                         });
                     this.setState({userAdded: true});
                     this.props.handleAdd(data);

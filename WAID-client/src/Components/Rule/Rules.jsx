@@ -7,7 +7,18 @@ import EditRule from "./EditRule";
 import {Redirect} from "react-router-dom";
 import axios from "axios";
 import './Rules.css';
+import https from 'https';
 
+const agent = new https.Agent({
+    rejectUnauthorized: false
+});
+const config = {
+    headers: {
+        'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('user'))['access_token']}`,
+        'Content-Type': 'application/json'
+    },
+    httpsAgent: agent
+};
 class Rules extends Component {
 
     constructor(props) {
@@ -31,7 +42,8 @@ class Rules extends Component {
                 headers: {
                     'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('user'))['access_token']}`,
                     'Content-Type': 'application/json'
-                }
+                },
+                httpsAgent: agent
             });
             this.setState({rulesLists: data})
         } catch (error) {
@@ -72,12 +84,7 @@ class Rules extends Component {
 
     updateTable = async () => {
         try {
-            const {data} = await ruleAxios.get(`/getall`, {
-                headers: {
-                    'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('user'))['access_token']}`,
-                    'Content-Type': 'application/json'
-                }
-            });
+            const {data} = await ruleAxios.get(`/getall`, config);
             this.setState({rulesLists: data})
         } catch (error) {
             console.log('error on update table', error);
@@ -85,12 +92,7 @@ class Rules extends Component {
     };
     handleDelete = async () => {
         try {
-            const {status} = await ruleAxios.delete(`/delete/${this.state.currentRule.id}`,{
-                headers: {
-                    'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('user'))['access_token']}`,
-                    'Content-Type': 'application/json'
-                }
-            });
+            const {status} = await ruleAxios.delete(`/delete/${this.state.currentRule.id}`,config);
             if (status) {
                 this.hideModal()
             } else {
@@ -113,13 +115,8 @@ class Rules extends Component {
     handleUpdate = async (e) => {
         e.preventDefault();
         try {
-            const {status} = await ruleAxios.put(`/update/${this.state.currentRule.id}`,{
-                data: this.state.currentRule,
-                headers: {
-                    'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('user'))['access_token']}`,
-                    'Content-Type': 'application/json'
-                }
-            });
+            const data = this.state.currentRule;
+            const {status} = await ruleAxios.put(`/update/${this.state.currentRule.id}`, data,config);
             if (status) {
                 this.hideModal()
             } else {

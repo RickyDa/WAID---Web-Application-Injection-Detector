@@ -8,8 +8,8 @@ const ACTION = {
 };
 
 const TYPE = {
-    0: "SQL Injection",
-    1: "XSS"
+    0: "Injection Attack",
+    1: "Blocked Host"
 };
 
 class Rule extends Component {
