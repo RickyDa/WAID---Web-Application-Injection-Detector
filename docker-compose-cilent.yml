@@ -1,10 +1,11 @@
-version: "3"
+version: "3.7"
 
 services:
 
   server:
 
-    build: WAID-server/
+    build: 
+        context: ./WAID-server
         args:
             MODE: --client
        
@@ -12,7 +13,8 @@ services:
       - 5000:5000
 
   client:
-    build: WAID-client/
+    build: 
+        context: ./WAID-client
     stdin_open: true
 
     depends_on:
