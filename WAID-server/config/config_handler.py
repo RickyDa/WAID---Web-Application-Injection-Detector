@@ -46,12 +46,12 @@ class Config:
     @staticmethod
     def set_value(key, value):
         try:
-            CONFIG_PARSER.set('GENERAL', key, value)
+            CONFIG_PARSER.set('GENERAL', key, str(value))
             with open(str(FILE_PATH), 'w') as configfile:
                 CONFIG_PARSER.write(configfile)
                 return True
-        except (configparser.NoSectionError, TypeError):
-            # log.exception(f"Key - '{key}' dont exist in the config file, using default value - {default}.")
+        except (configparser.NoSectionError, TypeError) as e:
+            log.exception(f"Error occurred - {e}")
             return None
 
     @staticmethod

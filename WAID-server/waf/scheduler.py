@@ -16,7 +16,7 @@ def scheduled_upload_db():
         update_rules_mail(get_all_rules_by_time_delta(dt=2))
 
 
-@sched.scheduled_job('cron', id='client_task_collect')  # every 00:00 clients will send their rules to the server
+@sched.scheduled_job('cron', id='client_task_collect', hour=0)  # every 00:00 clients will send their rules to the server
 def scheduled_db_collection():
     if config.get_value('is_client', 'True') == 'True':
         SERVER_ADDRESS = config.get_value('server_ip', '') + '/rule/collect'
