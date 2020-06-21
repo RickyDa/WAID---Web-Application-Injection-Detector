@@ -55,8 +55,6 @@ def login():
     if is_auth:
         user_payload = jsonify(
             UserPayload(id=user.id, mail=user.mail, username=user.username, role=user.role).serialize())
-        # user_payload["access_token"] = create_access_token(identity=user.username)
-        # user_payload["refresh_token"] = create_refresh_token(identity=user.username)
         return user_payload
     else:
         return Response(status=500)

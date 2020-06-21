@@ -1,0 +1,9 @@
+.logonav{
+    border-radius: 15px 15px;
+    background-color: rgba(219, 219, 219, 0.4);
+    padding: 10px;
+}
+.hnav{
+    font-weight: bold;
+    font-size: 150%;
+}

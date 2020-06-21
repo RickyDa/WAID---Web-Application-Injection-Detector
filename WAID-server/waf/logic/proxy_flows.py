@@ -37,6 +37,7 @@ class Flows:
 
     def _response(self):
         data = self.request.data if self.request.content_type == 'application/json' else self.request.form
+        self.site_name = config.get_value('site_address', 'https://redtiger.labs.overthewire.org/')
         response = send_request(self.request.method,
                                 f'{self.site_name}{self.path}?{self.request.query_string.decode("utf8")}',
                                 data=data)

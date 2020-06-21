@@ -3,7 +3,9 @@ import "./login.css";
 import userAxios from '../User/userAxios';
 import {Redirect} from "react-router-dom"
 import https from 'https';
+import Logo from '../logo.png';
 
+const agent = new https.Agent({ rejectUnauthorized: false });
 
 class Login extends Component {
     constructor(props) {
@@ -30,7 +32,7 @@ class Login extends Component {
             password: this.state.password
         };
         try {
-            const {data} = await userAxios.post('login', userInfo);
+            const {data} = await userAxios.post('login', userInfo, { agent});
             sessionStorage.clear();
             sessionStorage.setItem('user',JSON.stringify(data));
             this.setState({redirect: true},()=>console.log(this.state));
@@ -50,6 +52,7 @@ class Login extends Component {
         return (
             <div className={"wrapperContainer"}>
                 <div className="innerContainer">
+                <img className={"logo"} src={Logo} alt="website logo"/>
                     <h1 className={"header"}>Welcome</h1>
                     <form onSubmit={this.onSubmit}>
                         <div className={"input"}>
