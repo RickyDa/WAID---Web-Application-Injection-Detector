@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Button from "../Utils/Button";
-import demoAxios from "./demoAxios";
+import {demoAxios} from "../ApiAxios/Axios";
 
 class Demo extends Component {
     constructor(props) {

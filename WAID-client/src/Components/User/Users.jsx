@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import User from './User'
 import AddUser from './AddUser'
-import userAxios from "./userAxios";
+import {userAxios} from "../ApiAxios/Axios";
 import Modal from '../Modal/Modal'
 import EditUser from "./EditUser";
 import {Redirect} from "react-router-dom";

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Rule from './Rule'
 import AddRule from './AddRule'
-import ruleAxios from "./ruleAxios";
+import {ruleAxios} from "../ApiAxios/Axios";
 import Modal from '../Modal/Modal'
 import EditRule from "./EditRule";
 import { Redirect } from "react-router-dom";

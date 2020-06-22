@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import userAxios from './userAxios'
+import {userAxios} from '../ApiAxios/Axios'
 import Input from '../Utils/Input'
 import Select from '../Utils/Select'
 import Button from "../Utils/Button";

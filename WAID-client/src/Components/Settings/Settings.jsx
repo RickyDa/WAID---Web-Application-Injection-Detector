@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import confAxios from "./confAxios";
+import {confAxios} from "../ApiAxios/Axios";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faToggleOn, faToggleOff } from '@fortawesome/free-solid-svg-icons'
 import './settings.css'

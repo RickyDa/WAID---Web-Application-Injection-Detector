@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import "./login.css";
-import userAxios from '../User/userAxios';
+import {userAxios} from '../ApiAxios/Axios'
 import {Redirect} from "react-router-dom"
 import https from 'https';
 import Logo from '../logo.png';
