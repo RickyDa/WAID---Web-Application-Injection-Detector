@@ -15,9 +15,11 @@ services:
   client:
     build: 
         context: ./WAID-client
-        
+        args:
+          ADDRESS: $ADDRESS
+          
     stdin_open: true
-
+    
     depends_on:
       - server
       
