@@ -7,8 +7,7 @@ WORKDIR /app
 ARG ADDRESS
 
 ENV ADDRESS=${ADDRESS}
-RUN echo ########HI########
-RUN echo $ADDRESS
+RUN echo Server address: $ADDRESS
 # add `/app/node_modules/.bin` to $PATH
 ENV PATH /app/node_modules/.bin:$PATH
 

@@ -8,6 +8,7 @@ services:
         context: ./WAID-server
         args:
             MODE: --client
+        
        
     ports:
       - 5000:5000
@@ -15,6 +16,10 @@ services:
   client:
     build: 
         context: ./WAID-client
+        args:
+          ADDRESS: "${ADDRESS:-localhost}"
+
+          
     stdin_open: true
 
     depends_on:

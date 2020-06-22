@@ -16,7 +16,7 @@ services:
     build: 
         context: ./WAID-client
         args:
-          ADDRESS: $ADDRESS
+          ADDRESS: "${ADDRESS:-localhost}"
           
     stdin_open: true
     
