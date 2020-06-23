@@ -134,7 +134,7 @@ export default class AddUser extends Component {
                         name="email"
                         change={this.handleChange}
                     />
-                    <small className={showHideEmailError}>Email not in the right format</small>
+
                     <Input
                         label="Password"
                         type="password"
@@ -147,7 +147,6 @@ export default class AddUser extends Component {
                         "\t*The password must contain at least one special character\n" +
                         "\t*The password must be eight characters or longer"}
                     />
-                    <small className={showHidePasswordError}>password not in the right format</small>
                     <Select
                         label="Role"
                         options={[
@@ -159,8 +158,7 @@ export default class AddUser extends Component {
                         defaultValue={this.state.role ? this.state.role : "empty"}
                         className="form-control rounded"
                         onChange={this.handleChange}/>
-                    <p className={showHideFieldsMissing}>Please fill All Fields!</p>
-                    <p className={duplicateEmail}>A User With this Email is already in the system!</p>
+
                     <Button
                         type={"button"}
                         onClick={this.handleAdd}
@@ -168,6 +166,11 @@ export default class AddUser extends Component {
                         className={"btn btn-info btn-rounded btn-sm mr-2 ml-2 z-depth-0 my-4 waves-effect"}
                     />
                 </form>
+                <small className={showHideEmailError}>Email not in the right format</small>
+                <small className={showHidePasswordError}>password not in the right format</small>
+                <small className={showHideFieldsMissing}>Please fill All Fields!</small>
+                <small className={duplicateEmail}>A User With this Email is already in the system!</small>
+
             </div>
         )
     }

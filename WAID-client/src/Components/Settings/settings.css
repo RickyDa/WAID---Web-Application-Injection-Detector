@@ -11,19 +11,31 @@ td:first-child {
     font-size: 125%;
 }
 
-table{
-    width:60% !important;
+table {
+    width: 60% !important;
     text-align: left!important;
 }
 
-table th{
+table th {
     text-align: center !important;
 }
 
-#fontawesome{
+#fontawesome {
     text-align: center!important;
 }
 
-small{
+small {
     padding-left: 2px;
+}
+
+.update-btn {
+    width: 20%!important;
+}
+
+.conf-table {
+    width: 100%!important;
+}
+
+label{
+    margin-left:0;
 }

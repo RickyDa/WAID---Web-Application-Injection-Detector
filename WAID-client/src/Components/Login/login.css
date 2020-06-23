@@ -14,7 +14,7 @@
 
 .innerContainer {
     color: #fff;
-    width: 20%;
+    width: 20rem;
     border-radius: 15px 50px;
     background-color: rgba(219, 219, 219, 0.4);
     display: flex;
@@ -80,4 +80,4 @@
 }
 form{
     margin-bottom: 2rem;
-    }
+}

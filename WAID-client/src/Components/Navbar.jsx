@@ -23,9 +23,6 @@ export default class Navbar extends Component {
                             <li className="nav-item">
                                 <Link className="nav-link" to={"/rules"}>Rules</Link>
                             </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to={"/demo"}>WAID Demo</Link>
-                            </li>
                         </ul>
                         <ul className="navbar-nav ml-auto">
                             <li className="nav-item">

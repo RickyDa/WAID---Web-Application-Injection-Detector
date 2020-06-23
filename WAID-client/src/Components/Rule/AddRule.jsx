@@ -48,7 +48,6 @@ export default class AddRule extends Component {
                         },
                         httpsAgent: agent
                     });
-                this.setState({ruleAdded: true});
                 this.props.handleAdd(data);
             } catch (error) {
                 console.log('error on add rule', error);
@@ -93,7 +92,7 @@ export default class AddRule extends Component {
                         defaultValue={this.state.action ? this.state.action : ""}
                         className="form-control"
                         onChange={this.handleChange}/>
-                    <p className={showHideFieldsMissing}>Please fill All Fields!</p>
+
                     <Button
                         type={"button"}
                         onClick={this.handleAdd}
@@ -101,6 +100,7 @@ export default class AddRule extends Component {
                         className={"btn btn-info btn-rounded btn-sm mr-2 ml-2 z-depth-0 my-4 waves-effect"}
                     />
                 </form>
+                <small className={showHideFieldsMissing}>Please fill All Fields!</small>
             </div>
         )
     }

@@ -35,7 +35,7 @@ class Login extends Component {
             const {data} = await userAxios.post('login', userInfo, { agent});
             sessionStorage.clear();
             sessionStorage.setItem('user',JSON.stringify(data));
-            this.setState({redirect: true},()=>console.log(this.state));
+            this.setState({redirect: true});
         } catch (error) {
             this.setState({wrongEmailOrPassword: true});
             console.log('Error on login', error);

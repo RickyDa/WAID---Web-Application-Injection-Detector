@@ -1,6 +1,9 @@
 import configparser
 from pathlib import Path
 import secrets
+
+from flask import Response
+
 from waf import log
 
 FILE_PATH = (Path(__file__).parent / 'config.ini').resolve()
@@ -27,8 +30,8 @@ class Config:
             'is_active': True,
             'is_analyzer': True,
             'is_classifier': True,
-            'mail': "waidwaf@gmail.com",
-            'mail_password': "rickyronen",
+            'mail': "",
+            'mail_password': "",
             'aws_access_key_id': '',
             'aws_secret_access_key': ''
         }
@@ -38,6 +41,7 @@ class Config:
     @staticmethod
     def get_value(key, default):
         try:
+            CONFIG_PARSER.read(str(FILE_PATH))
             return CONFIG_PARSER.get('GENERAL', key)
         except (configparser.NoOptionError, KeyError):
             log.error(f"Key - '{key}' dont exist in the config file, using default value - {default}.")
@@ -57,8 +61,21 @@ class Config:
     @staticmethod
     def get_all_web():
         to_client_dict = {}
+        CONFIG_PARSER.read(str(FILE_PATH))
         props = dict(CONFIG_PARSER.items(section='GENERAL'))
         for k, v in props.items():
             if k not in private_conf_list:
                 to_client_dict[k] = v
         return to_client_dict
+
+    @staticmethod
+    def set_all_conf(new_conf):
+        try:
+            for k, v in new_conf.items():
+                CONFIG_PARSER.set('GENERAL', k, str(v))
+            with open(str(FILE_PATH), 'w') as configfile:
+                CONFIG_PARSER.write(configfile)
+                return Response(status=200)
+        except (configparser.NoSectionError, TypeError) as e:
+            log.exception(f"Error occurred - {e}")
+            return Response(status=400)

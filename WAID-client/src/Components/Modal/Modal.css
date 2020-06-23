@@ -10,16 +10,17 @@
 .modal-main {
     position: fixed;
     background: white;
-    width: 80%;
+    width: auto;
     height: auto;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    border-radius: 15px 30px;
 }
 
 .modal-header {
     margin: 0;
-    padding: 1rem 0;
+    padding: 2rem 10rem;
 
 }
 

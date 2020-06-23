@@ -4,8 +4,10 @@ table{
 }
 form{
     width: auto !important;
+    margin-bottom:0!important;
 }
 
 label {
-    margin: 0 1em;
+    margin: 0 0.5em!important;
 }
+
