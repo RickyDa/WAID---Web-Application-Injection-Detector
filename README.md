@@ -11,8 +11,9 @@ https://github.com/RickyDa/BigData-Http-injections
 
 In Addition we implemented client side application for WAID configuration as seen on the WAID-client folder.
 
+***NOTE: On real world WAFs are implemented as a reverse proxy, on our project we implemented it as a proxy to showcase our results.***
+
 <img src="https://github.com/RickyDa/WAID---Web-Application-Injection-Detector/blob/master/assets/archi.png" height="450" width="300">
-**NOTE: On real world WAFs are implemented as a reverse proxy, on our project we implemented it as a proxy to showcase our results.**
 
 
 # Installation 
