@@ -1,1 +1,1 @@
-# WAID---Web-Application-Injection-Detector
+# WAID- Web Application Injection Detector
