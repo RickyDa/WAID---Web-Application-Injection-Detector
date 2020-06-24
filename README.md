@@ -34,7 +34,9 @@ docker-compose -f docker-compose-client.yml up --build
  # Requirments:
  
 > Install docker and docker compose and you are ready to go. 
+
 **OR**
+
 > Run the setup.sh script
 ```
 sudo bash setup.sh
