@@ -29,7 +29,7 @@ def get_all():
 
 
 def get_users_mails():
-    User.query.with_entities(User.mail).all()
+    return User.query.with_entities(User.mail).all()
 
 
 def delete_user_by_id(user_id):

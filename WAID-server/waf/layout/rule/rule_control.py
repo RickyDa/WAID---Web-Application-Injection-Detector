@@ -1,14 +1,15 @@
 ##################################################
+from pathlib import Path
+
+import boto3
+from botocore.exceptions import ClientError
 from flask import request, jsonify, Response
 ##################################################
 from flask_jwt_extended import jwt_required
+
 from waf import app, log, config
 from waf.layout.rule.rule_boundary import RulePayload, parse_rule
 from waf.logic import rule_service
-
-from pathlib import Path
-import boto3
-from botocore.exceptions import ClientError
 
 
 ##################################################
@@ -47,7 +48,7 @@ def update_rule_by_id(rule_id):
         return Response(status=500)
 
 
-base_path = Path(__file__).parent
+base_path = Path(__file__).parent.parent.parent
 db_path = (base_path / "./database/server.db")
 
 
@@ -58,8 +59,9 @@ def upload_db():
         aws_access_key_id=config.get_value('aws_access_key_id', ''),
         aws_secret_access_key=config.get_value('aws_secret_access_key', ''))
     try:
-        response = s3_client.upload_file(db_path, 'waid-db', 'server.db')
-        log.info(f'Database uploaded{response}')
+        s3_client.upload_file(str(db_path), 'waid-db', 'server.db')
+        log.info(f'Database uploaded')
+
         return Response(status=200)
     except ClientError as e:
         log.debug(e)
@@ -73,7 +75,7 @@ def download_db():
         aws_access_key_id=config.get_value('aws_access_key_id', ''),
         aws_secret_access_key=config.get_value('aws_secret_access_key', ''))
     try:
-        response = s3.download_file('waid-db', 'server.db', db_path)
+        response = s3.download_file('waid-db', 'server.db', str(db_path))
         log.info(f'Database Downloaded{response}')
         return Response(status=200)
     except ClientError as e:
