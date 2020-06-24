@@ -10,3 +10,20 @@ We used machine learning algrithms to detect if an HTTP payload contains malicio
 https://github.com/RickyDa/BigData-Http-injections
 
 In Addition we implemented client side application for WAID configuration as seen on the WAID-client folder.
+
+![architechture](https://github.com/RickyDa/WAID---Web-Application-Injection-Detector/blob/master/assets/archi.png)
+
+
+** NOTE: On real world WAFs are implemented as a reverse proxy, on our project we implemented it as a proxy to showcase our results. **
+
+
+# Installation 
+> Server Mode
+```
+ADDRESS="UR_SERVER_IP" docker-compose -f docker-compose-server.yml up --build 
+```
+> ADDRESS arg is optional, if not provided UR_SERVER_IP is localhost by default (So you can test it on ur local computer).
+
+
+
+
