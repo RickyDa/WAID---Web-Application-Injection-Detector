@@ -1,3 +1,5 @@
+<img src="https://github.com/RickyDa/WAID---Web-Application-Injection-Detector/blob/master/assets/logo.png" height="250" width="300">
+
 # WAID- Web Application Injection Detector
 
 In this project, we developed a WAF - Web Application Firewall. Nowadays, where apps are commonly robust and often keep sensitive user information, we will be interested in preventing data theft. Therefore, the need for security for said app rises, and WAF is the solution.
