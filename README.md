@@ -21,7 +21,28 @@ In Addition we implemented client side application for WAID configuration as see
 ```
 ADDRESS="UR_SERVER_IP" docker-compose -f docker-compose-server.yml up --build 
 ```
-> ADDRESS arg is optional, if not provided UR_SERVER_IP is localhost by default (So you can test it on ur local computer).
+> ADDRESS arg is optional, if not provided UR_SERVER_IP is localhost by default (So you can test it on ur local computer). Recommended to install on a remote server and use the client mode on local to exeperince the full project flow. In addition u can configure the site you would like to secure on the control panel.
+
+
+> client Mode
+```
+docker-compose -f docker-compose-client.yml up --build 
+```
+
+> After intalling the client mode containers some configuration must be done, go to http://localhost:3000 and configure the remote server IP adress.
+
+ # Requirments:
+ 
+> Install docker and docker compose and you are ready to go. 
+**OR**
+> Run the setup.sh script
+```
+sudo bash setup.sh
+```
+
+
+
+
 
 
 
